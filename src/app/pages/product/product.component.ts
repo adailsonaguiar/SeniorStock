@@ -41,8 +41,13 @@ export class ProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.items = [
-      { label: 'Products', routerLink: '/test' },
-      { label: 'Form', routerLink: '/product' },
+      { label: 'Products', routerLink: '/' },
+      {
+        label: 'Form',
+        routerLink: `/product/${
+          this.productEdit?.id ? this.productEdit.id : 'new'
+        }`,
+      },
     ];
 
     const id = this.route.snapshot.paramMap.get('id');

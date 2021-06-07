@@ -4,7 +4,7 @@
     <input
       *ngIf="type !== 'number'"
       class="p-inputtext p-component"
-      [class.ng-invalid]="invalid"
+      [class.ng-invalid]="!!invalid"
       [id]="name"
       [type]="type"
       [maxlength]="maxlength"
@@ -45,4 +45,5 @@
     [(ngModel)]="value"
     (ngModelChange)="onChange()"
   />
+  <small *ngIf="error" class="p-error">{{error}}</small>
 </div>

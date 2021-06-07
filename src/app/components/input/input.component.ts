@@ -17,8 +17,9 @@ export class InputComponent implements OnInit {
   @Input() suffix = '';
   @Input() maxlength = 500;
   @Input() mode = '';
-  @Input() invalid = true;
+  @Input() invalid = false;
   @Input() value = '';
+  @Input() error = '';
   @Output() inputModelChange = new EventEmitter<InputComponentType>();
 
   constructor() {}

@@ -38,7 +38,7 @@ export class FormProductComponent implements OnInit {
     selectedUnity: new FormControl({ name: 'Lt', value: 0 }),
     perishable: new FormControl({ label: 'No', value: false }),
     quantity: new FormControl(''),
-    manufacturing: new FormControl(''),
+    manufacturing: new FormControl('', [Validators.required]),
     price: new FormControl(''),
     expiration: new FormControl('', []),
   });
@@ -60,13 +60,30 @@ export class FormProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.productEdit && this.productForm.setValue(this.productEdit);
+    this.setValidators();
+  }
+
+  setValidators() {
+    const expiration = this.productForm.get('expiration');
+
+    this.productForm.get('perishable')?.valueChanges.subscribe((perishable) => {
+      if (perishable.value) expiration?.setValidators([Validators.required]);
+      else expiration?.setValidators(null);
+
+      expiration?.updateValueAndValidity();
+    });
+
+    expiration?.valueChanges.subscribe((date) => {
+      const dateExpiration = new Date(date);
+      if (dateExpiration < new Date())
+        expiration?.setErrors({ label: 'This product is expired' });
+      console.log(expiration);
+    });
   }
 
   onSubmit(): void {
-    // console.warn('Your order has been submitted', this.productForm.value);
-    // this.productForm.reset();
-    const valueForm = this.productForm.value;
-    this.sendFormEvent.emit(valueForm);
+    if (this.productForm.valid) this.sendFormEvent.emit(this.productForm.value);
+    else this.productForm.controls.name.updateValueAndValidity();
   }
 
   inputModelChange(field: InputComponentType) {

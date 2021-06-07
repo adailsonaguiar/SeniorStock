@@ -1,7 +1,7 @@
 <div class="p-shadow-2 p-fluid p-p-5">
   <form
-    [formGroup]="productForm"
     class="p-formgrid p-fluid p-grid"
+    [formGroup]="productForm"
     (ngSubmit)="onSubmit()"
   >
     <app-input
@@ -14,7 +14,6 @@
       [invalid]="!productForm.controls.name.valid"
       [value]="productForm.value.name"
     ></app-input>
-
     <div class="p-field p-md-12 p-sm-12 p-lg-2">
       <label for="state">Unity</label>
       <p-dropdown
@@ -46,6 +45,7 @@
       *ngIf="productForm.value.selectedUnity.name === 'Kg'"
       suffix=" Kg"
       [value]="productForm.value.quantity"
+      [maxlength]="6"
       (inputModelChange)="inputModelChange($event)"
     ></app-input>
 
@@ -77,9 +77,10 @@
       name="manufacturing"
       label="Manufacturing Date"
       (inputModelChange)="inputModelChange($event)"
+      [invalid]="!productForm.controls.manufacturing.valid"
       [value]="productForm.value.manufacturing"
     ></app-input>
-
+    {{ productForm.controls.expiration.valid | json }}
     <div class="p-field p-md-12 p-sm-12 p-lg-2">
       <label for="perishable" class="p-pr-2">Perishable</label>
 
@@ -96,8 +97,10 @@
       [invalid]="true"
       type="date"
       name="expiration"
-      label="Dxpiration Date"
+      label="Expiration Date"
+      [invalid]="!productForm.controls.expiration.valid"
       (inputModelChange)="inputModelChange($event)"
+      [error]="productForm.controls.expiration.errors?.label"
       [value]="productForm.value.expiration"
     ></app-input>
   </form>
@@ -105,13 +108,13 @@
     <button
       class="p-button-primary p-button-lg p-mb-2 p-mr-2"
       pButton
-      type="button"
       label="Save"
       icon="pi pi-save"
       iconPos="right"
+      type="submit"
+      [disabled]="!productForm.valid"
       (click)="onSubmit()"
     ></button>
-
     <a
       class="p-button-primary p-button-outlined p-button-lg p-mb-2 p-mr-2"
       pButton
@@ -119,7 +122,7 @@
       label="Cancel"
       icon="pi pi-times"
       iconPos="right"
-      [routerLink]="['/test']"
+      [routerLink]="['/']"
     ></a>
   </div>
 </div>
