@@ -9,13 +9,17 @@ import { ProductTypes } from 'src/app/pages/product/product.component';
 export class TableDynamicDemoComponent implements OnInit {
   @Input() products: ProductTypes[] = [];
   @Output() deleteProduct = new EventEmitter<string>();
+  @Output() searchProducts = new EventEmitter<string>();
 
   constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   delete(id: string | undefined) {
     this.deleteProduct.emit(id);
+  }
+
+  searchTable(searchField: any) {
+    this.searchProducts.emit(searchField.target.value);
   }
 }

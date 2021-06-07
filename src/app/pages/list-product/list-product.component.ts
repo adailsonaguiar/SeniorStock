@@ -38,4 +38,8 @@ export class ListProductComponent implements OnInit {
       reject: () => {},
     });
   }
+
+  searchProducts(searchField: string) {
+    this.products = this.productService.searchProducts(searchField);
+  }
 }

@@ -52,4 +52,11 @@ export class ProductService {
     this.localStorageService.set('products', newList);
     return newList;
   }
+
+  searchProducts(searchField: string) {
+    const products = this.getProducts();
+    return products.filter((product: ProductTypes) =>
+      product.name.includes(searchField)
+    );
+  }
 }

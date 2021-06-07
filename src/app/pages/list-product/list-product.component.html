@@ -1,6 +1,7 @@
 <app-table-dynamic-demo
   [products]="products"
   (deleteProduct)="deleteProduct($event)"
+  (searchProducts)="searchProducts($event)"
 ></app-table-dynamic-demo>
 <p-confirmDialog
   header="Confirmation"
