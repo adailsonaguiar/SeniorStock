@@ -1,0 +1,6 @@
+<p-breadcrumb [model]="items"></p-breadcrumb>
+<app-form-product
+  (sendFormEvent)="saveProduct($event)"
+  [productEdit]="productEdit"
+></app-form-product>
+<p-toast></p-toast>

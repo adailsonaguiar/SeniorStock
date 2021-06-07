@@ -1,0 +1,48 @@
+<div class="p-field">
+  <label [for]="name">{{ label }}</label>
+  <ng-container *ngIf="!mode">
+    <input
+      *ngIf="type !== 'number'"
+      class="p-inputtext p-component"
+      [class.ng-invalid]="invalid"
+      [id]="name"
+      [type]="type"
+      [maxlength]="maxlength"
+      pattern="[a-zA-Z ]*"
+      pInputText
+      [(ngModel)]="value"
+      (ngModelChange)="onChange()"
+    />
+    <!-- <div
+      class="form-control-feedback"
+      *ngIf="email.errors && (email.dirty || email.touched)"
+    >
+      <p *ngIf="email.errors.required">Email is required</p>
+      <p *ngIf="email.errors.pattern">
+        The email address must contain at least the @ character
+      </p>
+      <p *ngIf="email.errors.emailDomain">
+        Email must be on the codecraft.tv domain
+      </p>
+      (1)
+    </div> -->
+    <p-inputNumber
+      *ngIf="type === 'number'"
+      [class.ng-invalid]="invalid"
+      [suffix]="suffix"
+      [maxlength]="maxlength"
+      [(ngModel)]="value"
+      (ngModelChange)="onChange()"
+    ></p-inputNumber>
+  </ng-container>
+
+  <input
+    *ngIf="mode === 'currency'"
+    class="p-inputtext p-component"
+    [class.ng-invalid]="invalid"
+    currencyMask
+    [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
+    [(ngModel)]="value"
+    (ngModelChange)="onChange()"
+  />
+</div>

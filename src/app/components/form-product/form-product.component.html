@@ -1,0 +1,125 @@
+<div class="p-shadow-2 p-fluid p-p-5">
+  <form
+    [formGroup]="productForm"
+    class="p-formgrid p-fluid p-grid"
+    (ngSubmit)="onSubmit()"
+  >
+    <app-input
+      class="p-md-12 p-sm-12 p-lg-4"
+      type="text"
+      name="name"
+      label="Name"
+      [maxlength]="50"
+      (inputModelChange)="inputModelChange($event)"
+      [invalid]="!productForm.controls.name.valid"
+      [value]="productForm.value.name"
+    ></app-input>
+
+    <div class="p-field p-md-12 p-sm-12 p-lg-2">
+      <label for="state">Unity</label>
+      <p-dropdown
+        inputId="value"
+        placeholder="Select"
+        optionLabel="unity"
+        [options]="unities"
+        formControlName="selectedUnity"
+        optionLabel="name"
+      ></p-dropdown>
+    </div>
+    <app-input
+      class="p-md-12 p-sm-12 p-lg-4"
+      type="number"
+      name="quantity"
+      label="Quantity"
+      *ngIf="productForm.value.selectedUnity.name === 'Lt'"
+      suffix=" Lt"
+      [maxlength]="6"
+      (inputModelChange)="inputModelChange($event)"
+      [value]="productForm.value.quantity"
+    ></app-input>
+
+    <app-input
+      class="p-md-12 p-sm-12 p-lg-4"
+      type="number"
+      name="quantity"
+      label="Quantity"
+      *ngIf="productForm.value.selectedUnity.name === 'Kg'"
+      suffix=" Kg"
+      [value]="productForm.value.quantity"
+      (inputModelChange)="inputModelChange($event)"
+    ></app-input>
+
+    <app-input
+      class="p-md-12 p-sm-12 p-lg-4"
+      type="number"
+      name="quantity"
+      label="Quantity"
+      *ngIf="productForm.value.selectedUnity.name === 'Un'"
+      suffix=" Un"
+      [value]="productForm.value.quantity"
+      (inputModelChange)="inputModelChange($event)"
+    ></app-input>
+
+    <app-input
+      class="p-md-12 p-sm-12 p-lg-4"
+      type="number"
+      name="price"
+      label="Price"
+      [invalid]="false"
+      mode="currency"
+      [value]="productForm.value.price"
+      (inputModelChange)="inputModelChange($event)"
+    ></app-input>
+
+    <app-input
+      class="p-md-12 p-sm-12 p-lg-4"
+      type="date"
+      name="manufacturing"
+      label="Manufacturing Date"
+      (inputModelChange)="inputModelChange($event)"
+      [value]="productForm.value.manufacturing"
+    ></app-input>
+
+    <div class="p-field p-md-12 p-sm-12 p-lg-2">
+      <label for="perishable" class="p-pr-2">Perishable</label>
+
+      <p-selectButton
+        [options]="perishableValues"
+        optionLabel="label"
+        formControlName="perishable"
+      ></p-selectButton>
+    </div>
+
+    <app-input
+      *ngIf="!!productForm.value.perishable.value"
+      class="p-md-12 p-sm-12 p-lg-4"
+      [invalid]="true"
+      type="date"
+      name="expiration"
+      label="Dxpiration Date"
+      (inputModelChange)="inputModelChange($event)"
+      [value]="productForm.value.expiration"
+    ></app-input>
+  </form>
+  <div class="p-d-flex p-flex-column p-flex-md-row">
+    <button
+      class="p-button-primary p-button-lg p-mb-2 p-mr-2"
+      pButton
+      type="button"
+      label="Save"
+      icon="pi pi-save"
+      iconPos="right"
+      (click)="onSubmit()"
+    ></button>
+
+    <a
+      class="p-button-primary p-button-outlined p-button-lg p-mb-2 p-mr-2"
+      pButton
+      type="button"
+      label="Cancel"
+      icon="pi pi-times"
+      iconPos="right"
+      [routerLink]="['/test']"
+    ></a>
+  </div>
+</div>
