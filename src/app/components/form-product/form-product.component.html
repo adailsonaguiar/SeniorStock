@@ -5,16 +5,16 @@
     (ngSubmit)="onSubmit()"
   >
     <app-input
-      class="p-md-12 p-sm-12 p-lg-4"
+      class="p-md-12 p-sm-12 p-lg-4 p-col-12"
       type="text"
       name="name"
-      label="Name"
+      label="Name *"
       [maxlength]="50"
       (inputModelChange)="inputModelChange($event)"
       [invalid]="!productForm.controls.name.valid"
       [value]="productForm.value.name"
     ></app-input>
-    <div class="p-field p-md-12 p-sm-12 p-lg-2">
+    <div class="p-field p-md-12 p-sm-12 p-lg-2 p-col-12">
       <label for="state">Unity</label>
       <p-dropdown
         inputId="value"
@@ -26,62 +26,63 @@
       ></p-dropdown>
     </div>
     <app-input
-      class="p-md-12 p-sm-12 p-lg-4"
+      class="p-md-12 p-sm-12 p-lg-4 p-col-12"
       type="number"
       name="quantity"
-      label="Quantity"
+      label="Quantity *"
       *ngIf="productForm.value.selectedUnity.name === 'Lt'"
-      suffix=" Lt"
-      [maxlength]="6"
+      suffix="Lt"
+      [maxlength]="3"
       (inputModelChange)="inputModelChange($event)"
+      [invalid]="!productForm.controls.quantity.valid"
       [value]="productForm.value.quantity"
     ></app-input>
-
     <app-input
-      class="p-md-12 p-sm-12 p-lg-4"
+      class="p-md-12 p-sm-12 p-lg-4 p-col-12"
       type="number"
       name="quantity"
-      label="Quantity"
+      label="Quantity *"
       *ngIf="productForm.value.selectedUnity.name === 'Kg'"
-      suffix=" Kg"
+      suffix="Kg"
       [value]="productForm.value.quantity"
-      [maxlength]="6"
+      [maxlength]="3"
+      [invalid]="!productForm.controls.quantity.valid"
       (inputModelChange)="inputModelChange($event)"
     ></app-input>
 
     <app-input
-      class="p-md-12 p-sm-12 p-lg-4"
+      class="p-md-12 p-sm-12 p-lg-4 p-col-12"
       type="number"
       name="quantity"
-      label="Quantity"
+      label="Quantity *"
       *ngIf="productForm.value.selectedUnity.name === 'Un'"
-      suffix=" Un"
+      suffix="Un"
       [value]="productForm.value.quantity"
+      [invalid]="!productForm.controls.quantity.valid"
       (inputModelChange)="inputModelChange($event)"
     ></app-input>
 
     <app-input
-      class="p-md-12 p-sm-12 p-lg-4"
+      class="p-md-12 p-sm-12 p-lg-4 p-col-12"
       type="number"
       name="price"
-      label="Price"
-      [invalid]="false"
+      label="Price *"
+      [invalid]="!productForm.controls.price.valid"
       mode="currency"
       [value]="productForm.value.price"
       (inputModelChange)="inputModelChange($event)"
     ></app-input>
 
     <app-input
-      class="p-md-12 p-sm-12 p-lg-4"
+      class="p-md-12 p-sm-12 p-lg-4 p-col-12"
       type="date"
       name="manufacturing"
-      label="Manufacturing Date"
+      label="Manufacturing Date *"
       (inputModelChange)="inputModelChange($event)"
       [invalid]="!productForm.controls.manufacturing.valid"
       [value]="productForm.value.manufacturing"
     ></app-input>
-    {{ productForm.controls.expiration.valid | json }}
-    <div class="p-field p-md-12 p-sm-12 p-lg-2">
+    <div class="p-field p-md-12 p-sm-12 p-lg-2 p-col-12">
       <label for="perishable" class="p-pr-2">Perishable</label>
 
       <p-selectButton
@@ -93,36 +94,41 @@
 
     <app-input
       *ngIf="!!productForm.value.perishable.value"
-      class="p-md-12 p-sm-12 p-lg-4"
+      class="p-md-12 p-sm-12 p-lg-4 p-col-12"
       [invalid]="true"
       type="date"
       name="expiration"
-      label="Expiration Date"
+      label="Expiration Date *"
       [invalid]="!productForm.controls.expiration.valid"
       (inputModelChange)="inputModelChange($event)"
       [error]="productForm.controls.expiration.errors?.label"
       [value]="productForm.value.expiration"
     ></app-input>
+    <small
+      *ngIf="!productForm.valid"
+      [ngStyle]="{ color: 'var(--pink-500)' }"
+      class="p-inputgroup p-mb-2"
+      >Fill in all fields with *</small
+    >
+    <div class="p-d-flex p-flex-column p-flex-md-row p-md-12 p-sm-12 p-lg-12 p-col-12">
+      <button
+        class="p-button-primary p-button-lg p-mb-2 p-mr-2"
+        pButton
+        label="Save"
+        icon="pi pi-save"
+        iconPos="right"
+        type="submit"
+        [disabled]="!productForm.valid"
+      ></button>
+      <a
+        class="p-button-primary p-button-outlined p-button-lg p-mb-2 p-mr-2"
+        pButton
+        type="button"
+        label="Cancel"
+        icon="pi pi-times"
+        iconPos="right"
+        [routerLink]="['/']"
+      ></a>
+    </div>
   </form>
-  <div class="p-d-flex p-flex-column p-flex-md-row">
-    <button
-      class="p-button-primary p-button-lg p-mb-2 p-mr-2"
-      pButton
-      label="Save"
-      icon="pi pi-save"
-      iconPos="right"
-      type="submit"
-      [disabled]="!productForm.valid"
-      (click)="onSubmit()"
-    ></button>
-    <a
-      class="p-button-primary p-button-outlined p-button-lg p-mb-2 p-mr-2"
-      pButton
-      type="button"
-      label="Cancel"
-      icon="pi pi-times"
-      iconPos="right"
-      [routerLink]="['/']"
-    ></a>
-  </div>
 </div>

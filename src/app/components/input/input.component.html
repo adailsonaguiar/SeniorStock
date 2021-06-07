@@ -1,49 +1,43 @@
 <div class="p-field">
   <label [for]="name">{{ label }}</label>
-  <ng-container *ngIf="!mode">
+  <div class="p-inputgroup">
+    <ng-container *ngIf="!mode">
+      <input
+        [id]="name"
+        *ngIf="type !== 'number'"
+        class="p-inputtext p-component"
+        [class.ng-invalid]="!!invalid"
+        [type]="type"
+        [maxlength]="maxlength"
+        pattern="[a-zA-Z ]*"
+        pInputText
+        [(ngModel)]="value"
+        (ngModelChange)="onChange()"
+      />
+
+      <p-inputNumber
+        [id]="name"
+        *ngIf="type === 'number'"
+        class="p-col-10 p-pr-0"
+        [class.ng-invalid]="invalid"
+        [maxlength]="maxlength"
+        [(ngModel)]="value"
+        (ngModelChange)="onChange()"
+      ></p-inputNumber>
+    </ng-container>
+
     <input
-      *ngIf="type !== 'number'"
-      class="p-inputtext p-component"
-      [class.ng-invalid]="!!invalid"
       [id]="name"
-      [type]="type"
-      [maxlength]="maxlength"
-      pattern="[a-zA-Z ]*"
-      pInputText
+      *ngIf="mode === 'currency'"
+      class="p-inputtext p-component"
+      [class.ng-invalid]="invalid"
+      currencyMask
+      [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
       [(ngModel)]="value"
       (ngModelChange)="onChange()"
     />
-    <!-- <div
-      class="form-control-feedback"
-      *ngIf="email.errors && (email.dirty || email.touched)"
-    >
-      <p *ngIf="email.errors.required">Email is required</p>
-      <p *ngIf="email.errors.pattern">
-        The email address must contain at least the @ character
-      </p>
-      <p *ngIf="email.errors.emailDomain">
-        Email must be on the codecraft.tv domain
-      </p>
-      (1)
-    </div> -->
-    <p-inputNumber
-      *ngIf="type === 'number'"
-      [class.ng-invalid]="invalid"
-      [suffix]="suffix"
-      [maxlength]="maxlength"
-      [(ngModel)]="value"
-      (ngModelChange)="onChange()"
-    ></p-inputNumber>
-  </ng-container>
 
-  <input
-    *ngIf="mode === 'currency'"
-    class="p-inputtext p-component"
-    [class.ng-invalid]="invalid"
-    currencyMask
-    [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }"
-    [(ngModel)]="value"
-    (ngModelChange)="onChange()"
-  />
-  <small *ngIf="error" class="p-error">{{error}}</small>
+    <span *ngIf="suffix" class="p-inputgroup-addon p-col-2">{{ suffix }}</span>
+  </div>
+  <small *ngIf="error" class="p-error">{{ error }}</small>
 </div>

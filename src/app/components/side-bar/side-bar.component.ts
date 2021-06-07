@@ -17,7 +17,7 @@ export class SideBarComponent implements OnInit {
 
   ngOnInit() {
     this.menuItems = [
-      { name: 'Products', route: ['/test'], active: false },
+      { name: 'Products', route: ['/'], active: false },
       { name: 'Register Product', route: ['/product', 'new'], active: false },
     ];
   }

@@ -37,9 +37,9 @@ export class FormProductComponent implements OnInit {
     name: new FormControl('', [Validators.required]),
     selectedUnity: new FormControl({ name: 'Lt', value: 0 }),
     perishable: new FormControl({ label: 'No', value: false }),
-    quantity: new FormControl(''),
+    quantity: new FormControl('', [Validators.required]),
     manufacturing: new FormControl('', [Validators.required]),
-    price: new FormControl(''),
+    price: new FormControl('', [Validators.required, Validators.min(0.01)]),
     expiration: new FormControl('', []),
   });
 
@@ -65,6 +65,7 @@ export class FormProductComponent implements OnInit {
 
   setValidators() {
     const expiration = this.productForm.get('expiration');
+    const manufacturing = this.productForm.get('manufacturing');
 
     this.productForm.get('perishable')?.valueChanges.subscribe((perishable) => {
       if (perishable.value) expiration?.setValidators([Validators.required]);
@@ -77,7 +78,10 @@ export class FormProductComponent implements OnInit {
       const dateExpiration = new Date(date);
       if (dateExpiration < new Date())
         expiration?.setErrors({ label: 'This product is expired' });
-      console.log(expiration);
+      if (dateExpiration < new Date(manufacturing?.value))
+        expiration?.setErrors({
+          label: 'Expiration date cannot be greater than manufacturing date',
+        });
     });
   }
 
